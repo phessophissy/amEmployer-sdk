@@ -1,0 +1,15 @@
+{
+  "name": "amemployer-growth-bot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Install and smoke-check @phessophissy/amemployer-sdk",
+  "type": "module",
+  "main": "index.js",
+  "dependencies": {
+    "@phessophissy/amemployer-sdk": "latest",
+    "ethers": "latest"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}

@@ -1,0 +1,32 @@
+# Updated workflow to use Node.js 24 for all actions
+name: Growth Pulse
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  growth-pulse:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install and Check SDK (15x)
+        working-directory: ./growth-bot
+        run: |
+          for i in {1..15}; do
+            echo "--- Execution $i/15 ---"
+            rm -rf node_modules
+            npm install --prefer-online --no-package-lock
+            npm run start
+          done
