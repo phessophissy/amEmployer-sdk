@@ -1,0 +1,67 @@
+{
+  "name": "@amemployer/sdk",
+  "version": "1.0.0",
+  "description": "TypeScript/JavaScript SDK for the amEmployer autonomous labor platform on Celo",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "build:check": "tsc --noEmit",
+    "dev": "tsup --watch",
+    "test": "node --experimental-vm-modules node_modules/.bin/jest",
+    "prepublishOnly": "npm run build:check && npm run build"
+  },
+  "keywords": [
+    "celo",
+    "web3",
+    "blockchain",
+    "sdk",
+    "autonomous-labor",
+    "smart-contracts",
+    "ethers",
+    "amemployer",
+    "defi",
+    "ai-agent"
+  ],
+  "author": "amEmployer",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/phessophissy/amEmployer-sdk"
+  },
+  "homepage": "https://github.com/phessophissy/amEmployer-sdk#readme",
+  "bugs": {
+    "url": "https://github.com/phessophissy/amEmployer-sdk/issues"
+  },
+  "dependencies": {
+    "ethers": "^6.13.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsup": "^8.3.0",
+    "typescript": "^5.4.5"
+  },
+  "peerDependencies": {
+    "ethers": "^6.0.0"
+  },
+  "peerDependenciesMeta": {
+    "ethers": {
+      "optional": false
+    }
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
