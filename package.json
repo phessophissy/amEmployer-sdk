@@ -1,5 +1,5 @@
 {
-  "name": "@amemployer/sdk",
+  "name": "@phessophissy/amemployer-sdk",
   "version": "1.0.0",
   "description": "TypeScript/JavaScript SDK for the amEmployer autonomous labor platform on Celo",
   "main": "./dist/index.js",
