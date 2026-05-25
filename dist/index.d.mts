@@ -132,6 +132,8 @@ interface OnchainWorkerIdentity {
 interface AmEmployerConfig {
     /** REST API base URL. Defaults to http://localhost:4000 */
     apiUrl?: string;
+    /** Supported Celo chain ID used to resolve default RPC and contract addresses */
+    chainId?: 42220 | 44787;
     /** Ethers.js provider or RPC URL for on-chain reads */
     rpcUrl?: string;
     /** Ethers.js signer for write operations */

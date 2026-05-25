@@ -97,6 +97,13 @@ export class AmEmployer {
   readonly workerRegistry: WorkerRegistryContract;
 
   constructor(config: AmEmployerConfig = {}) {
+    const chainId = config.chainId ?? CHAIN_IDS.CELO_MAINNET;
+    const defaults = CONTRACT_ADDRESSES[chainId];
+
+    if (!defaults) {
+      throw new Error(`Unsupported amEmployer chain ID: ${chainId}`);
+    }
+
     // REST client
     this.client = new AmEmployerClient({
       apiUrl: config.apiUrl ?? DEFAULT_API_URL,
@@ -106,10 +113,9 @@ export class AmEmployer {
     // Resolve provider / signer
     const providerOrSigner: ethers.Provider | ethers.Signer = config.signer
       ? config.signer
-      : new ethers.JsonRpcProvider(config.rpcUrl ?? RPC_URLS[CHAIN_IDS.CELO_MAINNET]);
+      : new ethers.JsonRpcProvider(config.rpcUrl ?? RPC_URLS[chainId]);
 
-    // Resolve contract addresses — default to Celo mainnet
-    const defaults = CONTRACT_ADDRESSES[CHAIN_IDS.CELO_MAINNET];
+    // Resolve contract addresses for the selected network.
     const tmAddress = config.taskManagerAddress ?? defaults.TaskManager;
     const wrAddress = config.workerRegistryAddress ?? defaults.WorkerRegistry;
 
