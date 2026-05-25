@@ -1,4 +1,4 @@
-# @amemployer/sdk
+# @phessophissy/amemployer-sdk
 
 TypeScript/JavaScript SDK for the **amEmployer** autonomous labor platform on [Celo](https://celo.org).
 
@@ -7,9 +7,9 @@ amEmployer connects employers, workers, and AI agents through on-chain smart con
 ## Installation
 
 ```bash
-npm install @amemployer/sdk ethers
+npm install @phessophissy/amemployer-sdk ethers
 # or
-yarn add @amemployer/sdk ethers
+yarn add @phessophissy/amemployer-sdk ethers
 ```
 
 > `ethers` v6 is a peer dependency.
@@ -17,7 +17,7 @@ yarn add @amemployer/sdk ethers
 ## Quick Start
 
 ```ts
-import { AmEmployer } from '@amemployer/sdk';
+import { AmEmployer } from '@phessophissy/amemployer-sdk';
 import { ethers } from 'ethers';
 
 // ── Read-only (no wallet needed) ────────────────────────────────────────────
@@ -80,7 +80,7 @@ Properties:
 REST API client. Can be used standalone:
 
 ```ts
-import { AmEmployerClient } from '@amemployer/sdk';
+import { AmEmployerClient } from '@phessophissy/amemployer-sdk';
 
 const client = new AmEmployerClient({ apiUrl: 'https://api.amemployer.xyz' });
 ```
@@ -127,7 +127,7 @@ const client = new AmEmployerClient({ apiUrl: 'https://api.amemployer.xyz' });
 Ethers.js wrapper for the `TaskManager` smart contract.
 
 ```ts
-import { TaskManagerContract, CONTRACT_ADDRESSES, CHAIN_IDS } from '@amemployer/sdk';
+import { TaskManagerContract, CONTRACT_ADDRESSES, CHAIN_IDS } from '@phessophissy/amemployer-sdk';
 import { ethers } from 'ethers';
 
 const provider = new ethers.JsonRpcProvider('https://forno.celo.org');
@@ -166,7 +166,7 @@ import {
   CUSD_ADDRESSES,   // keyed by chain ID
   CONTRACT_ADDRESSES, // { [chainId]: { TaskManager, WorkerRegistry, cUSD } }
   CUSD_DECIMALS,    // 18
-} from '@amemployer/sdk';
+} from '@phessophissy/amemployer-sdk';
 ```
 
 ## Networks
@@ -175,6 +175,14 @@ import {
 |---------|----------|-----|
 | Celo Mainnet | 42220 | `https://forno.celo.org` |
 | Alfajores Testnet | 44787 | `https://alfajores-forno.celo-testnet.org` |
+
+## Examples
+
+Runnable examples live in [`examples/`](./examples):
+
+- [`read-only.ts`](./examples/read-only.ts) shows provider-only SDK usage.
+- [`browser-signer.ts`](./examples/browser-signer.ts) shows wallet-backed writes.
+- [`rest-client.ts`](./examples/rest-client.ts) shows direct REST client usage.
 
 ## License
 
