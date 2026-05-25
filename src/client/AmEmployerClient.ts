@@ -11,6 +11,9 @@ import type {
   RegisterWorkerInput,
   SubmitTaskInput,
   StartSimulationInput,
+  JobListParams,
+  TaskListParams,
+  WorkerListParams,
 } from '../types';
 
 export class AmEmployerApiError extends Error {
@@ -84,18 +87,28 @@ export class AmEmployerClient {
     return this.request<T>('POST', path, body);
   }
 
+  private queryString(params?: Record<string, string | number | undefined>) {
+    if (!params) {
+      return '';
+    }
+
+    const query = new URLSearchParams(
+      Object.entries(params)
+        .filter(([, value]) => value !== undefined)
+        .map(([key, value]) => [key, String(value)]),
+    ).toString();
+
+    return query ? `?${query}` : '';
+  }
+
   // ─── Jobs ─────────────────────────────────────────────────────────────────
 
   readonly jobs = {
     /**
      * List all jobs. Optionally filter by employer address.
      */
-    list: (params?: { employer?: string }): Promise<ListResponse<Job>> => {
-      const qs = params?.employer
-        ? `?employer=${encodeURIComponent(params.employer)}`
-        : '';
-      return this.get(`/api/jobs${qs}`);
-    },
+    list: (params?: JobListParams): Promise<ListResponse<Job>> =>
+      this.get(`/api/jobs${this.queryString(params)}`),
 
     /**
      * Get a single job by its ID, including tasks and AI logs.
@@ -128,22 +141,8 @@ export class AmEmployerClient {
     /**
      * List tasks with optional filters.
      */
-    list: (params?: {
-      status?: string;
-      worker?: string;
-      jobId?: string;
-      limit?: number;
-      offset?: number;
-    }): Promise<ListResponse<Task>> => {
-      const qs = params ? '?' + new URLSearchParams(
-        Object.fromEntries(
-          Object.entries(params)
-            .filter(([, v]) => v !== undefined)
-            .map(([k, v]) => [k, String(v)]),
-        ),
-      ).toString() : '';
-      return this.get(`/api/tasks${qs}`);
-    },
+    list: (params?: TaskListParams): Promise<ListResponse<Task>> =>
+      this.get(`/api/tasks${this.queryString(params)}`),
 
     /**
      * Get a single task by ID.
@@ -170,20 +169,8 @@ export class AmEmployerClient {
     /**
      * List workers, optionally filtered by type.
      */
-    list: (params?: {
-      type?: string;
-      limit?: number;
-      offset?: number;
-    }): Promise<ListResponse<Worker>> => {
-      const qs = params ? '?' + new URLSearchParams(
-        Object.fromEntries(
-          Object.entries(params)
-            .filter(([, v]) => v !== undefined)
-            .map(([k, v]) => [k, String(v)]),
-        ),
-      ).toString() : '';
-      return this.get(`/api/workers${qs}`);
-    },
+    list: (params?: WorkerListParams): Promise<ListResponse<Worker>> =>
+      this.get(`/api/workers${this.queryString(params)}`),
 
     /**
      * Get a worker by wallet address.
