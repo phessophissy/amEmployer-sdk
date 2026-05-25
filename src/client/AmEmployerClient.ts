@@ -87,15 +87,17 @@ export class AmEmployerClient {
     return this.request<T>('POST', path, body);
   }
 
-  private queryString(params?: Record<string, string | number | undefined>) {
+  private queryString(params?: object) {
     if (!params) {
       return '';
     }
 
+    const entries = Object.entries(params)
+      .filter(([, value]) => value !== undefined)
+      .map(([key, value]) => [key, String(value)] as [string, string]);
+
     const query = new URLSearchParams(
-      Object.entries(params)
-        .filter(([, value]) => value !== undefined)
-        .map(([key, value]) => [key, String(value)]),
+      entries,
     ).toString();
 
     return query ? `?${query}` : '';

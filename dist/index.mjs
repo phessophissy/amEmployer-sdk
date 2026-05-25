@@ -53,10 +53,7 @@ var AmEmployerClient = class {
       /**
        * List all jobs. Optionally filter by employer address.
        */
-      list: (params) => {
-        const qs = params?.employer ? `?employer=${encodeURIComponent(params.employer)}` : "";
-        return this.get(`/api/jobs${qs}`);
-      },
+      list: (params) => this.get(`/api/jobs${this.queryString(params)}`),
       /**
        * Get a single job by its ID, including tasks and AI logs.
        */
@@ -79,14 +76,7 @@ var AmEmployerClient = class {
       /**
        * List tasks with optional filters.
        */
-      list: (params) => {
-        const qs = params ? "?" + new URLSearchParams(
-          Object.fromEntries(
-            Object.entries(params).filter(([, v]) => v !== void 0).map(([k, v]) => [k, String(v)])
-          )
-        ).toString() : "";
-        return this.get(`/api/tasks${qs}`);
-      },
+      list: (params) => this.get(`/api/tasks${this.queryString(params)}`),
       /**
        * Get a single task by ID.
        */
@@ -105,14 +95,7 @@ var AmEmployerClient = class {
       /**
        * List workers, optionally filtered by type.
        */
-      list: (params) => {
-        const qs = params ? "?" + new URLSearchParams(
-          Object.fromEntries(
-            Object.entries(params).filter(([, v]) => v !== void 0).map(([k, v]) => [k, String(v)])
-          )
-        ).toString() : "";
-        return this.get(`/api/workers${qs}`);
-      },
+      list: (params) => this.get(`/api/workers${this.queryString(params)}`),
       /**
        * Get a worker by wallet address.
        */
@@ -190,6 +173,16 @@ var AmEmployerClient = class {
   }
   post(path, body) {
     return this.request("POST", path, body);
+  }
+  queryString(params) {
+    if (!params) {
+      return "";
+    }
+    const entries = Object.entries(params).filter(([, value]) => value !== void 0).map(([key, value]) => [key, String(value)]);
+    const query = new URLSearchParams(
+      entries
+    ).toString();
+    return query ? `?${query}` : "";
   }
 };
 
