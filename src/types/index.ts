@@ -203,3 +203,23 @@ export interface StartSimulationInput {
   walletCount: number;
   name: string;
 }
+
+// ─── Query Parameter Types ──────────────────────────────────────────────────
+
+export interface JobListParams {
+  employer?: string;
+}
+
+export interface TaskListParams {
+  status?: TaskStatus;
+  worker?: string;
+  jobId?: string;
+  limit?: number;
+  offset?: number;
+}
+
+export interface WorkerListParams {
+  type?: WorkerType;
+  limit?: number;
+  offset?: number;
+}

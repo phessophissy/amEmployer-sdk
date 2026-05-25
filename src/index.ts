@@ -29,6 +29,9 @@ export type {
   RegisterWorkerInput,
   SubmitTaskInput,
   StartSimulationInput,
+  JobListParams,
+  TaskListParams,
+  WorkerListParams,
 } from './types';
 export { WorkerTypeOnChain } from './types';
 
