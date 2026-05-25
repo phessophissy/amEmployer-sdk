@@ -586,12 +586,16 @@ var WorkerRegistryContract = class {
 };
 var AmEmployer = class {
   constructor(config = {}) {
+    const chainId = config.chainId ?? CHAIN_IDS.CELO_MAINNET;
+    const defaults = CONTRACT_ADDRESSES[chainId];
+    if (!defaults) {
+      throw new Error(`Unsupported amEmployer chain ID: ${chainId}`);
+    }
     this.client = new AmEmployerClient({
       apiUrl: config.apiUrl ?? DEFAULT_API_URL,
       timeout: config.timeout
     });
-    const providerOrSigner = config.signer ? config.signer : new ethers.JsonRpcProvider(config.rpcUrl ?? RPC_URLS[CHAIN_IDS.CELO_MAINNET]);
-    const defaults = CONTRACT_ADDRESSES[CHAIN_IDS.CELO_MAINNET];
+    const providerOrSigner = config.signer ? config.signer : new ethers.JsonRpcProvider(config.rpcUrl ?? RPC_URLS[chainId]);
     const tmAddress = config.taskManagerAddress ?? defaults.TaskManager;
     const wrAddress = config.workerRegistryAddress ?? defaults.WorkerRegistry;
     this.taskManager = new TaskManagerContract(tmAddress, providerOrSigner);

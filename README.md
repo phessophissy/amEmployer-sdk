@@ -51,6 +51,20 @@ const taskId = await sdk.taskManager.createTask(
 console.log('Created task:', taskId);
 ```
 
+### Alfajores Testnet
+
+Use `chainId` to switch the SDK's default RPC and deployed contract addresses
+to Alfajores:
+
+```ts
+import { AmEmployer, CHAIN_IDS } from '@amemployer/sdk';
+
+const sdk = new AmEmployer({
+  chainId: CHAIN_IDS.CELO_ALFAJORES,
+  apiUrl: 'https://api.amemployer.xyz',
+});
+```
+
 ## API Reference
 
 ### `new AmEmployer(config?)`
@@ -60,6 +74,7 @@ All-in-one SDK entry point.
 | Config option             | Type                  | Default                       |
 |---------------------------|-----------------------|-------------------------------|
 | `apiUrl`                  | `string`              | `http://localhost:4000`       |
+| `chainId`                 | `42220 \| 44787`      | `42220` (Celo mainnet)        |
 | `rpcUrl`                  | `string`              | `https://forno.celo.org`      |
 | `signer`                  | `ethers.Signer`       | —                             |
 | `taskManagerAddress`      | `string`              | Deployed mainnet address      |
