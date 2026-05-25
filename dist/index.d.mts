@@ -176,6 +176,21 @@ interface StartSimulationInput {
     walletCount: number;
     name: string;
 }
+interface JobListParams {
+    employer?: string;
+}
+interface TaskListParams {
+    status?: TaskStatus;
+    worker?: string;
+    jobId?: string;
+    limit?: number;
+    offset?: number;
+}
+interface WorkerListParams {
+    type?: WorkerType;
+    limit?: number;
+    offset?: number;
+}
 
 declare class AmEmployerApiError extends Error {
     readonly status: number;
@@ -201,13 +216,12 @@ declare class AmEmployerClient {
     private request;
     private get;
     private post;
+    private queryString;
     readonly jobs: {
         /**
          * List all jobs. Optionally filter by employer address.
          */
-        list: (params?: {
-            employer?: string;
-        }) => Promise<ListResponse<Job>>;
+        list: (params?: JobListParams) => Promise<ListResponse<Job>>;
         /**
          * Get a single job by its ID, including tasks and AI logs.
          */
@@ -229,13 +243,7 @@ declare class AmEmployerClient {
         /**
          * List tasks with optional filters.
          */
-        list: (params?: {
-            status?: string;
-            worker?: string;
-            jobId?: string;
-            limit?: number;
-            offset?: number;
-        }) => Promise<ListResponse<Task>>;
+        list: (params?: TaskListParams) => Promise<ListResponse<Task>>;
         /**
          * Get a single task by ID.
          */
@@ -253,11 +261,7 @@ declare class AmEmployerClient {
         /**
          * List workers, optionally filtered by type.
          */
-        list: (params?: {
-            type?: string;
-            limit?: number;
-            offset?: number;
-        }) => Promise<ListResponse<Worker>>;
+        list: (params?: WorkerListParams) => Promise<ListResponse<Worker>>;
         /**
          * Get a worker by wallet address.
          */
@@ -543,4 +547,4 @@ declare class AmEmployer {
     constructor(config?: AmEmployerConfig);
 }
 
-export { AmEmployer, AmEmployerApiError, AmEmployerClient, type AmEmployerConfig, CHAIN_IDS, CONTRACT_ADDRESSES, CUSD_ADDRESSES, CUSD_DECIMALS, type CreateJobInput, DEFAULT_API_URL, DEFAULT_PLATFORM_FEE_PERCENT, DEFAULT_RPC_URL, DEFAULT_TIMEOUT_MS, EXPLORER_URLS, type Job, type JobStatus, type ListResponse, type OnchainTask, type OnchainWorkerIdentity, type OnchainWorkerProfile, type Payment, type PaymentStatus, type PlatformStats, RPC_URLS, type RegisterWorkerInput, type SingleResponse, type StartSimulationInput, type SubmitTaskInput, TASK_MANAGER_ABI, type Task, TaskManagerContract, type TaskStatus, VALIDATION_PASS_SCORE, WORKER_REGISTRY_ABI, type Worker, WorkerRegistryContract, type WorkerType, WorkerTypeOnChain, type WorkerTypeOnChainValue };
+export { AmEmployer, AmEmployerApiError, AmEmployerClient, type AmEmployerConfig, CHAIN_IDS, CONTRACT_ADDRESSES, CUSD_ADDRESSES, CUSD_DECIMALS, type CreateJobInput, DEFAULT_API_URL, DEFAULT_PLATFORM_FEE_PERCENT, DEFAULT_RPC_URL, DEFAULT_TIMEOUT_MS, EXPLORER_URLS, type Job, type JobListParams, type JobStatus, type ListResponse, type OnchainTask, type OnchainWorkerIdentity, type OnchainWorkerProfile, type Payment, type PaymentStatus, type PlatformStats, RPC_URLS, type RegisterWorkerInput, type SingleResponse, type StartSimulationInput, type SubmitTaskInput, TASK_MANAGER_ABI, type Task, type TaskListParams, TaskManagerContract, type TaskStatus, VALIDATION_PASS_SCORE, WORKER_REGISTRY_ABI, type Worker, type WorkerListParams, WorkerRegistryContract, type WorkerType, WorkerTypeOnChain, type WorkerTypeOnChainValue };
